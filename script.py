@@ -477,7 +477,7 @@ def receber_mensagens(offset=None):
 def iniciar_bot():
 
     print("=" * 45)
-    print("MUSIC BOT INICIADO COM SUCESSO!")
+    print("Rhythm Bot INICIADO!")
     print("=" * 45)
 
     offset = None
