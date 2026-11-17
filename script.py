@@ -263,7 +263,7 @@ def processar_pesquisa(chat_id, texto):
         enviar_mensagem(
             chat_id,
             "❌ Nenhuma música encontrada.\n\n"
-            "Tente pesquisar com outro nome."
+            "Tente pesquisar com outro nome..."
         )
 
         return
@@ -345,8 +345,8 @@ def processar_escolha(callback):
         "🎵 MÚSICA SELECIONADA\n\n"
         f"📌 Título: {musica['titulo']}\n"
         f"👤 Artista: {musica['artista']}\n\n"
-        "📖 Clique no link para consultar a letra completa, "
-        "acesse a página oficial da música:\n\n"
+        "📍 Clique no link abaixo para consultar a letra completa, "
+        "e acessar a página da música:\n\n"
         f"🔗 {musica['url']}"
     )
 
@@ -413,7 +413,7 @@ def processar_atualizacao(atualizacao):
             chat_id,
             "🎵 COMO UTILIZAR O BOT?\n\n"
             "1. Envie o nome de uma música ou artista.\n"
-            "2. Clique no botão que tem a música desejada.\n"
+            "2. Clique no botão que possui a música desejada.\n"
             "3. Receba os detalhes e o link da letra.\n\n"
             "Comandos disponíveis:\n"
             "/start - Iniciar o bot\n"
