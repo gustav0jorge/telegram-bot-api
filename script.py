@@ -399,7 +399,7 @@ def processar_atualizacao(atualizacao):
         enviar_mensagem(
             chat_id,
             "🎵 Bem-vindo ao Rhythm Bot!\n\n"
-            "Pesquise músicas e artistas utilizando através do nosso bot.\n\n"
+            "Pesquise músicas e artistas através do nosso bot.\n\n"
             "🔎 Inicie enviando o nome de uma música ou artista!\n\n"
             "🖇️Exemplo: Bohemian Rhapsody"
         )
