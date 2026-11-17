@@ -12,19 +12,23 @@ Um bot de música para Telegram desenvolvido em Python, permitindo que os usuár
 
 - Python
 - Telegram Bot API
-- Biblioteca:
+- Genious API
 
 
 
 ## Execução
 
-- Abra o link: (https://t.me/LyricRhythm_Bot)
-
-- digite:
+1- Acesse o bot pelo link: (https://t.me/LyricRhythm_Bot)
+2- Inicie uma conversa com o bot.
+3- digite o comando:
 ```bash
 /start
 ```
 
 ## Criadores
 
-Desenvolvido por Ângelo David, Gustavo Jorge, Matheus Felipe e Yasmim Aparecida.
+Desenvolvido por:
+- Ângelo David
+- Gustavo Jorge
+- Matheus Felipe
+- Yasmim Aparecida.
