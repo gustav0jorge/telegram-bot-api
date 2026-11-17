@@ -18,9 +18,9 @@ Um bot de música para Telegram desenvolvido em Python, permitindo que os usuár
 
 ## Execução
 
-1- Acesse o bot pelo link: (https://t.me/LyricRhythm_Bot)
-2- Inicie uma conversa com o bot.
-3- digite o comando:
+1. Acesse o bot pelo link: (https://t.me/LyricRhythm_Bot)
+2. Inicie uma conversa com o bot.
+3. digite o comando:
 ```bash
 /start
 ```
@@ -32,3 +32,6 @@ Desenvolvido por:
 - Gustavo Jorge
 - Matheus Felipe
 - Yasmim Aparecida.
+
+
+
