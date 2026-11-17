@@ -12,16 +12,15 @@ Um bot de música para Telegram desenvolvido em Python, permitindo que os usuár
 
 - Python
 - Telegram Bot API
-- (https://prod.liveshare.vsengsaas.visualstudio.com/join?CADE1721C53141046B9CD50DAA5ADD7B1E5C)
 - Biblioteca:
 
 
 
 ## Execução
 
-Abra o link:
+- Abra o link: (https://t.me/LyricRhythm_Bot)
 
-digite:
+- digite:
 ```bash
 /start
 ```
