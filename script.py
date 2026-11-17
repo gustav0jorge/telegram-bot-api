@@ -7,9 +7,9 @@ import requests
 from dotenv import load_dotenv
 
 
-# ==========================================
-# CONFIGURAÇÕES INICIAIS
-# ==========================================
+
+# inicio
+
 
 load_dotenv()
 
@@ -23,18 +23,19 @@ if not GENIUS_TOKEN:
     raise ValueError("GENIUS_ACCESS_TOKEN não encontrado no arquivo .env")
 
 
-# URLs das APIs
+# APIs
 TELEGRAM_URL = f"https://api.telegram.org/bot{BOT_TOKEN}"
 GENIUS_URL = "https://api.genius.com"
 
 
-# Cache temporário das músicas pesquisadas
+# cache temporário das músicas pesquisadas
 musicas_cache = {}
 
 
-# ==========================================
-# CONFIGURAÇÃO DA API GENIUS
-# ==========================================
+
+# api genius
+
+
 
 genius_session = requests.Session()
 
@@ -44,12 +45,14 @@ genius_session.headers.update({
 })
 
 
-# ==========================================
-# PESQUISAR MÚSICAS NO GENIUS
-# ==========================================
+
+
+# pesquisar musicas
+
+
 
 def pesquisar_musica(nome):
-    """Pesquisa músicas na API do Genius."""
+    """Pesquisa músicas através da API do Genius."""
 
     url = f"{GENIUS_URL}/search"
 
@@ -103,9 +106,9 @@ def pesquisar_musica(nome):
     return []
 
 
-# ==========================================
-# BUSCAR MÚSICA PELO ID
-# ==========================================
+
+# buscar musica pelo id
+
 
 def buscar_musica_por_id(musica_id):
     """Busca os detalhes de uma música pelo ID."""
@@ -141,9 +144,9 @@ def buscar_musica_por_id(musica_id):
     return None
 
 
-# ==========================================
-# CONFIGURAÇÃO DA API TELEGRAM
-# ==========================================
+
+# api telegram
+
 
 def enviar_mensagem(chat_id, texto, teclado=None):
     """Envia mensagens para o usuário."""
@@ -183,9 +186,9 @@ def enviar_mensagem(chat_id, texto, teclado=None):
     return None
 
 
-# ==========================================
-# RESPONDER AOS CLIQUES DOS BOTÕES
-# ==========================================
+
+# cliques dos botões
+
 
 def responder_callback(callback_id):
     """Confirma o recebimento do clique."""
@@ -211,9 +214,7 @@ def responder_callback(callback_id):
         print("Erro ao responder callback:", erro)
 
 
-# ==========================================
-# CRIAR BOTÕES DE ESCOLHA
-# ==========================================
+# botões de escolha
 
 def criar_teclado(musicas):
     """Cria um botão para cada música encontrada."""
@@ -230,7 +231,7 @@ def criar_teclado(musicas):
             f"{musica['titulo']} - {musica['artista']}"
         )
 
-        # Limita o texto do botão
+        # limite do texto
         nome_botao = nome_botao[:60]
 
         teclado["inline_keyboard"].append([
@@ -243,9 +244,9 @@ def criar_teclado(musicas):
     return teclado
 
 
-# ==========================================
-# PROCESSAR PESQUISA
-# ==========================================
+
+# pesquisa
+
 
 def processar_pesquisa(chat_id, texto):
     """Pesquisa músicas e apresenta os resultados."""
@@ -267,7 +268,7 @@ def processar_pesquisa(chat_id, texto):
 
         return
 
-    # Limita a quantidade de resultados
+    # limite da quantidade de resultados
     resultados = resultados[:5]
 
     resposta = "🎵 RESULTADOS ENCONTRADOS\n\n"
@@ -280,12 +281,12 @@ def processar_pesquisa(chat_id, texto):
             f"👤 Artista: {musica['artista']}\n\n"
         )
 
-        # Armazena a música para recuperar posteriormente
+        # armazena a música para recuperar posteriormente
         musicas_cache[str(musica["id"])] = musica
 
     resposta += "👇 Escolha uma música abaixo:"
 
-    # Cria os botões interativos
+    # cria os botões
     teclado = criar_teclado(resultados)
 
     enviar_mensagem(
@@ -295,16 +296,16 @@ def processar_pesquisa(chat_id, texto):
     )
 
 
-# ==========================================
-# PROCESSAR MÚSICA SELECIONADA
-# ==========================================
+
+# musica selecionada
+
 
 def processar_escolha(callback):
     """Processa a escolha de uma música pelo usuário."""
 
     callback_id = callback["id"]
 
-    # Confirma o clique no botão
+    # confirma o clique no botão
     responder_callback(callback_id)
 
     dados = callback.get("data", "")
@@ -312,7 +313,7 @@ def processar_escolha(callback):
     if not dados.startswith("musica:"):
         return
 
-    # Recupera o ID da música
+    # recupera o ID da música
     musica_id = dados.split(":", 1)[1]
 
     chat = callback.get("message", {}).get("chat")
@@ -322,10 +323,10 @@ def processar_escolha(callback):
 
     chat_id = chat["id"]
 
-    # Recupera a música do cache
+    # recupera a música do cache
     musica = musicas_cache.get(musica_id)
 
-    # Se não estiver no cache, consulta a API novamente
+    # consulta a API novamente caso nao esteja no cache
     if not musica:
 
         musica = buscar_musica_por_id(musica_id)
@@ -339,27 +340,27 @@ def processar_escolha(callback):
 
         return
 
-    # Monta a resposta
+    #resposta
     resposta = (
         "🎵 MÚSICA SELECIONADA\n\n"
         f"📌 Título: {musica['titulo']}\n"
         f"👤 Artista: {musica['artista']}\n\n"
-        "📖 Para consultar a letra completa, "
-        "acesse a página oficial da música no Genius:\n\n"
+        "📖 Clique no link para consultar a letra completa, "
+        "acesse a página oficial da música:\n\n"
         f"🔗 {musica['url']}"
     )
 
     enviar_mensagem(chat_id, resposta)
 
 
-# ==========================================
-# PROCESSAR ATUALIZAÇÕES DO TELEGRAM
-# ==========================================
+
+# atualizações no telegram
+
 
 def processar_atualizacao(atualizacao):
     """Identifica o tipo de atualização recebida."""
 
-    # Verifica se é um clique em botão
+    # verifica se é um clique em botão
     if "callback_query" in atualizacao:
 
         processar_escolha(
@@ -368,7 +369,7 @@ def processar_atualizacao(atualizacao):
 
         return
 
-    # Verifica se é uma mensagem
+    # verifica se é uma mensagem
     if "message" not in atualizacao:
         return
 
@@ -387,7 +388,7 @@ def processar_atualizacao(atualizacao):
 
         enviar_mensagem(
             chat_id,
-            "Por favor, envie o nome de uma música ou artista. 🎵"
+            "Por favor, envie o nome de uma música ou artista... 🎵"
         )
 
         return
@@ -397,12 +398,10 @@ def processar_atualizacao(atualizacao):
 
         enviar_mensagem(
             chat_id,
-            "🎵 Bem-vindo ao Music Bot!\n\n"
-            "Pesquise músicas e artistas utilizando "
-            "a API do Genius.\n\n"
-            "Envie o nome de uma música ou artista "
-            "para começar!\n\n"
-            "Exemplo: Bohemian Rhapsody"
+            "🎵 Bem-vindo ao Rhythm Bot!\n\n"
+            "Pesquise músicas e artistas utilizando através do nosso bot.\n\n"
+            "🔎 Inicie enviando o nome de uma música ou artista!\n\n"
+            "🖇️Exemplo: Bohemian Rhapsody"
         )
 
         return
@@ -412,9 +411,9 @@ def processar_atualizacao(atualizacao):
 
         enviar_mensagem(
             chat_id,
-            "🎵 COMO UTILIZAR O BOT\n\n"
+            "🎵 COMO UTILIZAR O BOT?\n\n"
             "1. Envie o nome de uma música ou artista.\n"
-            "2. Escolha uma música nos botões apresentados.\n"
+            "2. Clique no botão que tem a música desejada.\n"
             "3. Receba os detalhes e o link da letra.\n\n"
             "Comandos disponíveis:\n"
             "/start - Iniciar o bot\n"
@@ -427,9 +426,9 @@ def processar_atualizacao(atualizacao):
     processar_pesquisa(chat_id, texto)
 
 
-# ==========================================
-# RECEBER ATUALIZAÇÕES
-# ==========================================
+
+# atualizações
+
 
 def receber_mensagens(offset=None):
     """Recebe mensagens e cliques dos botões."""
@@ -471,9 +470,9 @@ def receber_mensagens(offset=None):
     return []
 
 
-# ==========================================
-# INICIALIZAÇÃO DO BOT
-# ==========================================
+
+# inicialização do bot
+
 
 def iniciar_bot():
 
@@ -517,9 +516,9 @@ def iniciar_bot():
             time.sleep(3)
 
 
-# ==========================================
-# EXECUÇÃO DO PROGRAMA
-# ==========================================
+
+# executar
+
 
 if __name__ == "__main__":
     iniciar_bot()
