@@ -28,7 +28,6 @@ TELEGRAM_URL = f"https://api.telegram.org/bot{BOT_TOKEN}"
 GENIUS_URL = "https://api.genius.com"
 
 
-# cache temporário das músicas pesquisadas
 musicas_cache = {}
 
 
@@ -231,7 +230,6 @@ def criar_teclado(musicas):
             f"{musica['titulo']} - {musica['artista']}"
         )
 
-        # limite do texto
         nome_botao = nome_botao[:60]
 
         teclado["inline_keyboard"].append([
@@ -246,8 +244,6 @@ def criar_teclado(musicas):
 
 
 # pesquisa
-
-
 def processar_pesquisa(chat_id, texto):
     """Pesquisa músicas e apresenta os resultados."""
 
@@ -268,7 +264,6 @@ def processar_pesquisa(chat_id, texto):
 
         return
 
-    # limite da quantidade de resultados
     resultados = resultados[:5]
 
     resposta = "🎵 RESULTADOS ENCONTRADOS\n\n"
@@ -281,7 +276,6 @@ def processar_pesquisa(chat_id, texto):
             f"👤 Artista: {musica['artista']}\n\n"
         )
 
-        # armazena a música para recuperar posteriormente
         musicas_cache[str(musica["id"])] = musica
 
     resposta += "👇 Escolha uma música abaixo:"
@@ -305,7 +299,6 @@ def processar_escolha(callback):
 
     callback_id = callback["id"]
 
-    # confirma o clique no botão
     responder_callback(callback_id)
 
     dados = callback.get("data", "")
@@ -323,7 +316,6 @@ def processar_escolha(callback):
 
     chat_id = chat["id"]
 
-    # recupera a música do cache
     musica = musicas_cache.get(musica_id)
 
     # consulta a API novamente caso nao esteja no cache
@@ -355,12 +347,9 @@ def processar_escolha(callback):
 
 
 # atualizações no telegram
-
-
 def processar_atualizacao(atualizacao):
     """Identifica o tipo de atualização recebida."""
 
-    # verifica se é um clique em botão
     if "callback_query" in atualizacao:
 
         processar_escolha(
@@ -369,7 +358,6 @@ def processar_atualizacao(atualizacao):
 
         return
 
-    # verifica se é uma mensagem
     if "message" not in atualizacao:
         return
 
@@ -406,7 +394,6 @@ def processar_atualizacao(atualizacao):
 
         return
 
-    # Comando /help
     if texto == "/help" or texto.startswith("/help@"):
 
         enviar_mensagem(
@@ -428,8 +415,6 @@ def processar_atualizacao(atualizacao):
 
 
 # atualizações
-
-
 def receber_mensagens(offset=None):
     """Recebe mensagens e cliques dos botões."""
 
@@ -469,11 +454,7 @@ def receber_mensagens(offset=None):
 
     return []
 
-
-
 # inicialização do bot
-
-
 def iniciar_bot():
 
     print("=" * 45)
@@ -518,7 +499,5 @@ def iniciar_bot():
 
 
 # executar
-
-
 if __name__ == "__main__":
     iniciar_bot()
