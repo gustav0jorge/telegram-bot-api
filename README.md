@@ -1,6 +1,6 @@
 # Rhythm Bot Telegram
 
-Um bot de música para Telegram desenvolvido em Python, permitindo que os usuários interajam com funcionalidades musicais diretamente pelo aplicativo.
+Um bot de música para o Telegram desenvolvido em Python, permitindo que os usuários interajam com funcionalidades musicais diretamente pelo aplicativo.
 
 ## Funcionalidades
 
@@ -12,7 +12,7 @@ Um bot de música para Telegram desenvolvido em Python, permitindo que os usuár
 
 - Python
 - Telegram Bot API
-- Genious API
+- Genius API
 
 
 
@@ -32,6 +32,5 @@ Desenvolvido por:
 - Gustavo Jorge
 - Matheus Felipe
 - Yasmim Aparecida.
-
 
 
